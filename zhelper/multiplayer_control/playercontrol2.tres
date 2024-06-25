@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PlayerControl" load_steps=2 format=3 uid="uid://b3sbltx2lno3e"]
+
+[ext_resource type="Script" path="res://zhelper/multiplayer_control/playercontrol.gd" id="1_ibk3a"]
+
+[resource]
+script = ExtResource("1_ibk3a")
+player_index = 1
+w = "w2"
+s = "s2"
+a = "a2"
+d = "d2"
+g = "g2"
+h = "h2"
+j = "j2"
+t = "t2"
+y = "y2"
+u = "u2"

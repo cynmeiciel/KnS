@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://cmybiy36c7oa3"]
+
+[ext_resource type="Script" path="res://Scene/TestStage.gd" id="1_4mnm0"]
+[ext_resource type="PackedScene" uid="uid://b7u8brji28up2" path="res://Player/Player.tscn" id="1_xuftq"]
+[ext_resource type="Texture2D" uid="uid://bx2l511yorpw" path="res://asset/teststage.png" id="2_6lko2"]
+[ext_resource type="Script" path="res://Scene/camera.gd" id="2_kn5fn"]
+[ext_resource type="PackedScene" uid="uid://hy4ih7o4jum5" path="res://Scene/HUD/hudui.tscn" id="4_gomw0"]
+[ext_resource type="Resource" uid="uid://b3sbltx2lno3e" path="res://zhelper/multiplayer_control/playercontrol2.tres" id="5_mscj8"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xyaen"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rwhff"]
+normal = Vector2(1, 0)
+distance = 5.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dml1l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dxj47"]
+size = Vector2(98, 3)
+
+[node name="TestStage" type="Node2D"]
+script = ExtResource("1_4mnm0")
+
+[node name="Camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(194, -815)
+zoom = Vector2(1.8, 1.8)
+limit_left = -667
+limit_top = -600
+limit_right = 640
+limit_bottom = 300
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+editor_draw_limits = true
+script = ExtResource("2_kn5fn")
+
+[node name="Collisions" type="Node" parent="."]
+
+[node name="Bound" type="Node" parent="Collisions"]
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Collisions/Bound"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Bound/StaticBody2D3"]
+position = Vector2(631, 13)
+shape = SubResource("WorldBoundaryShape2D_xyaen")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Collisions/Bound"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Bound/StaticBody2D2"]
+position = Vector2(-673, -4)
+shape = SubResource("WorldBoundaryShape2D_rwhff")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Collisions/Bound"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Bound/StaticBody2D"]
+position = Vector2(0, 210)
+shape = SubResource("WorldBoundaryShape2D_dml1l")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Collisions"]
+position = Vector2(13, 134)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/StaticBody2D"]
+position = Vector2(-23, 7)
+shape = SubResource("RectangleShape2D_dxj47")
+one_way_collision = true
+
+[node name="HUDUI" parent="." instance=ExtResource("4_gomw0")]
+
+[node name="Player" type="Node" parent="."]
+
+[node name="Player1" parent="Player" instance=ExtResource("1_xuftq")]
+unique_name_in_owner = true
+position = Vector2(-95, 131)
+
+[node name="Player2" parent="Player" instance=ExtResource("1_xuftq")]
+unique_name_in_owner = true
+position = Vector2(146, 146)
+p_ctr = ExtResource("5_mscj8")
+
+[node name="Index" parent="Player/Player2/DEBUG_Player" index="2"]
+text = "P2"
+
+[node name="Teststage" type="Sprite2D" parent="."]
+position = Vector2(3, 2)
+texture = ExtResource("2_6lko2")
+
+[editable path="Player/Player2"]
+[editable path="Player/Player2/DEBUG_Player"]

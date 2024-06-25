@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://hy4ih7o4jum5"]
+
+[ext_resource type="Script" path="res://Scene/HUD/FPS.gd" id="1_qtk41"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1fepo"]
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+
+[node name="HUDUI" type="CanvasLayer"]
+
+[node name="FPS" type="Label" parent="."]
+offset_left = 23.0
+offset_top = 9.0
+offset_right = 125.0
+offset_bottom = 51.0
+label_settings = SubResource("LabelSettings_1fepo")
+script = ExtResource("1_qtk41")

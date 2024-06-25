@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://kjk8ohhfeno"]
+
+[ext_resource type="Script" path="res://Debug/debugstate.gd" id="1_tgkux"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6w8v3"]
+
+[node name="DEBUG_Player" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Action" type="Label" parent="."]
+modulate = Color(4.81307e-07, 0.678543, 0.6811, 1)
+texture_filter = 1
+layout_mode = 0
+offset_left = 17.0
+offset_top = -31.0
+offset_right = 65.0
+offset_bottom = -8.0
+text = "action"
+label_settings = SubResource("LabelSettings_6w8v3")
+horizontal_alignment = 1
+
+[node name="State" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 22.0
+offset_top = -15.0
+offset_right = 62.0
+offset_bottom = 8.0
+text = "state"
+horizontal_alignment = 1
+script = ExtResource("1_tgkux")
+
+[node name="Index" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "P1"
