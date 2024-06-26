@@ -7,3 +7,4 @@ func _init(damage: int = 0, stun_duration: float = 1,
 	self.stun_duration = stun_duration
 	self.knock_force = knock_force
 	self.statuses = statuses
+	

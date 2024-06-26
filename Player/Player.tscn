@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b7u8brji28up2"]
+[gd_scene load_steps=26 format=3 uid="uid://b7u8brji28up2"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_q5g7w"]
 [ext_resource type="Texture2D" uid="uid://bb8y5tj3npc48" path="res://asset/eiki_stick1.png" id="2_2go1e"]
@@ -10,7 +10,12 @@
 [ext_resource type="Script" path="res://StateMachine/air.gd" id="6_x3fcm"]
 [ext_resource type="PackedScene" uid="uid://kjk8ohhfeno" path="res://Debug/debug_player.tscn" id="7_m3551"]
 [ext_resource type="Script" path="res://StateMachine/dash.gd" id="8_aacly"]
+[ext_resource type="Script" path="res://Player/mana.gd" id="10_f62f3"]
+[ext_resource type="Script" path="res://Player/stamina.gd" id="11_jttmc"]
 [ext_resource type="Script" path="res://Player/health.gd" id="11_pbic4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f5mm6"]
+height = 52.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oqcdf"]
 atlas = ExtResource("2_2go1e")
@@ -105,9 +110,6 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f5mm6"]
-height = 52.0
-
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(40, 33)
 collision_mask = 7
@@ -115,16 +117,6 @@ floor_stop_on_slope = false
 platform_floor_layers = 4294967294
 script = ExtResource("1_q5g7w")
 p_ctr = ExtResource("2_f3poj")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_ygs45")
-animation = &"air"
-autoplay = "idle"
-offset = Vector2(0, -13)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_f5mm6")
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_5uvqm")
@@ -155,8 +147,29 @@ script = ExtResource("6_x3fcm")
 
 [node name="Knocked" type="Node" parent="StateMachine"]
 
-[node name="Health" type="Node" parent="."]
+[node name="Stats" type="Node" parent="."]
+
+[node name="Health" type="Node" parent="Stats"]
+unique_name_in_owner = true
 script = ExtResource("11_pbic4")
+
+[node name="Mana" type="Node" parent="Stats"]
+unique_name_in_owner = true
+script = ExtResource("10_f62f3")
+
+[node name="Stamina" type="Node" parent="Stats"]
+unique_name_in_owner = true
+script = ExtResource("11_jttmc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_f5mm6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ygs45")
+animation = &"air"
+autoplay = "idle"
+offset = Vector2(0, -13)
 
 [node name="DEBUG_Player" parent="." instance=ExtResource("7_m3551")]
 offset_left = -39.0
