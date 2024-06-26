@@ -13,7 +13,7 @@ func update(_delta : float) -> void:
 		transits_to.emit("Air")
 		return
 	
-	if Input.is_action_just_released(owner.p_ctr.s):
+	if Input.is_action_just_released(p_ctr.s):
 		transits_to.emit("Idle")
 		return
 		

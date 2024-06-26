@@ -13,11 +13,11 @@ func update(_delta : float) -> void:
 		transits_to.emit("Air")
 		return
 		
-	if Input.is_action_pressed(owner.p_ctr.s):
+	if Input.is_action_pressed(p_ctr.s):
 		transits_to.emit("Block")
 		return
 		
-	var direction = Input.get_axis(owner.p_ctr.a, owner.p_ctr.d)
+	var direction = Input.get_axis(p_ctr.a, p_ctr.d)
 	if direction:
 		transits_to.emit("Move")
 		return

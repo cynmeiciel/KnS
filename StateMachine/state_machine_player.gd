@@ -3,10 +3,12 @@ class_name StateMachinePlayer
 
 
 func _ready():
+	super._ready()
 	for state in get_children():
 		if state is State:
 			state.p_anim = $"../AnimatedSprite2D"
-	super._ready()
+			state.p_ctr = owner.p_ctr
+	
 
 func transition(new_state : String) -> void:
 	super.transition(new_state)

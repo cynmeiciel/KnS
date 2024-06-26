@@ -138,10 +138,14 @@ script = ExtResource("8_aacly")
 wait_time = 0.4
 one_shot = true
 
-[node name="Attack" type="Node" parent="StateMachine"]
-
 [node name="Air" type="Node" parent="StateMachine"]
 script = ExtResource("6_x3fcm")
+
+[node name="KeyDelay" type="Timer" parent="StateMachine/Air"]
+wait_time = 0.1
+one_shot = true
+
+[node name="Attack" type="Node" parent="StateMachine"]
 
 [node name="Vulnerable" type="Node" parent="StateMachine"]
 

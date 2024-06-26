@@ -5,6 +5,7 @@ extends Node
 signal transits_to(new_state)
 
 var p_anim : AnimatedSprite2D
+var p_ctr : PlayerControl
 
 func handle_input(_ev : InputEvent) -> void:
 	pass
