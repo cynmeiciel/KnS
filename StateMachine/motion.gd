@@ -1,16 +1,19 @@
 extends State
 class_name MotionStateP
 
-const VELOCITY := 300.0
+const VELOCITY := 400.0
 const JUMP_VELOCITY := -470.0
+const ACCELERATION := VELOCITY*11
 
 var velocity := VELOCITY:
 	set(val):
 		var ratio: float = val / VELOCITY
 		jump_velocity *= ratio
+		acceleration *= ratio
 		velocity = val
 
 var jump_velocity := JUMP_VELOCITY
+var acceleration := ACCELERATION
 
 var direction: float = 0
 
@@ -45,8 +48,8 @@ func physics_update(_delta : float) -> void:
 	direction = get_horizontal_input()
 	
 	if direction:
-		owner.velocity.x = direction * velocity
+		owner.velocity.x = move_toward(owner.velocity.x, direction*velocity, acceleration*_delta)
 	else:
-		owner.velocity.x = move_toward(owner.velocity.x, 0, velocity)
+		owner.velocity.x = move_toward(owner.velocity.x, 0, acceleration*_delta)
 
 	owner.move_and_slide()

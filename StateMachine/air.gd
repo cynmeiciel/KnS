@@ -31,7 +31,7 @@ func handle_input(_ev : InputEvent) -> void:
 			print("lool")
 		
 	if _ev.is_action_pressed(p_ctr.w):
-		if can_jump_on_air:
+		if can_jump_on_air and $AirJumpDelay.is_stopped():
 			jump()
 			can_jump_on_air = false
 

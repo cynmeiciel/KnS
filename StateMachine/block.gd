@@ -3,7 +3,6 @@ class_name BlockStateP
 
 func enter() -> void:
 	super.enter()
-	owner.velocity = Vector2.ZERO
 	
 #func exit() -> void:
 	#pass
@@ -23,5 +22,6 @@ func handle_input(_ev : InputEvent) -> void:
 	pass
 	
 func physics_update(_delta : float) -> void:
+	owner.velocity.x = move_toward(owner.velocity.x, 0, acceleration*_delta)
 	direction = get_horizontal_input()
 	owner.move_and_slide()

@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://kjk8ohhfeno"]
+[gd_scene load_steps=9 format=3 uid="uid://kjk8ohhfeno"]
 
 [ext_resource type="Script" path="res://Debug/debugstate.gd" id="1_tgkux"]
-[ext_resource type="Script" path="res://Debug/debugvel.gd" id="2_grj1s"]
 [ext_resource type="Script" path="res://Debug/debughp.gd" id="2_tf61t"]
 [ext_resource type="Script" path="res://Debug/debugmp.gd" id="3_sw2xg"]
 [ext_resource type="Script" path="res://Debug/debugst.gd" id="4_b7tri"]
@@ -15,21 +14,9 @@ font_size = 11
 [sub_resource type="LabelSettings" id="LabelSettings_xic0o"]
 outline_size = 3
 
-[sub_resource type="LabelSettings" id="LabelSettings_vow7w"]
-font_size = 9
-font_color = Color(0, 0.623445, 0.341278, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_oy4dq"]
-font_size = 9
-font_color = Color(1, 0.137255, 0.341176, 1)
-
 [sub_resource type="LabelSettings" id="LabelSettings_7cpxe"]
 font_size = 9
-font_color = Color(0, 0.886275, 1, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_kbc5k"]
-font_size = 9
-font_color = Color(0.964706, 0.886275, 0.215686, 1)
+font_color = Color(1, 0.0745098, 0.286275, 1)
 
 [node name="DEBUG_Player" type="Control"]
 layout_mode = 3
@@ -74,42 +61,32 @@ text = "P1"
 label_settings = SubResource("LabelSettings_xic0o")
 horizontal_alignment = 1
 
-[node name="Velocity" type="Label" parent="."]
-layout_mode = 0
-offset_left = 57.0
-offset_top = -1.0
-offset_right = 97.0
-offset_bottom = 22.0
-text = "vel"
-label_settings = SubResource("LabelSettings_vow7w")
-script = ExtResource("2_grj1s")
-
 [node name="HP" type="Label" parent="."]
 layout_mode = 0
-offset_left = 10.0
+offset_left = 14.0
 offset_top = -1.0
-offset_right = 50.0
+offset_right = 54.0
 offset_bottom = 22.0
 text = "hp"
-label_settings = SubResource("LabelSettings_oy4dq")
+label_settings = SubResource("LabelSettings_7cpxe")
 script = ExtResource("2_tf61t")
 
 [node name="MP" type="Label" parent="."]
 layout_mode = 0
-offset_left = 10.0
+offset_left = 14.0
 offset_top = 7.0
-offset_right = 50.0
+offset_right = 54.0
 offset_bottom = 30.0
-text = "mp"
+text = "hp"
 label_settings = SubResource("LabelSettings_7cpxe")
 script = ExtResource("3_sw2xg")
 
 [node name="ST" type="Label" parent="."]
 layout_mode = 0
-offset_left = 10.0
+offset_left = 14.0
 offset_top = 15.0
-offset_right = 50.0
+offset_right = 54.0
 offset_bottom = 38.0
-text = "st"
-label_settings = SubResource("LabelSettings_kbc5k")
+text = "hp"
+label_settings = SubResource("LabelSettings_7cpxe")
 script = ExtResource("4_b7tri")

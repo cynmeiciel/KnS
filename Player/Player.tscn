@@ -146,6 +146,11 @@ script = ExtResource("6_x3fcm")
 wait_time = 0.1
 one_shot = true
 
+[node name="AirJumpDelay" type="Timer" parent="StateMachine/Air"]
+unique_name_in_owner = true
+wait_time = 0.35
+one_shot = true
+
 [node name="Attack" type="Node" parent="StateMachine"]
 
 [node name="Vulnerable" type="Node" parent="StateMachine"]
@@ -177,7 +182,7 @@ autoplay = "idle"
 offset = Vector2(0, -13)
 
 [node name="DEBUG_Player" parent="." instance=ExtResource("7_m3551")]
-offset_left = -39.0
-offset_top = -44.0
-offset_right = -39.0
-offset_bottom = -44.0
+offset_left = -41.0
+offset_top = -26.0
+offset_right = -41.0
+offset_bottom = -26.0
