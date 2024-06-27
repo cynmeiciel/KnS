@@ -6,7 +6,7 @@ signal mp_changed(new_mp)
 const MP_MAX: int = 1000
 var mp: int:
 	set(val):
-		mp = clamp(round(val), 0, 1000)
+		mp = clampi(round(val), 0, 1000)
 		mp_changed.emit(mp)
 	get:
 		return mp

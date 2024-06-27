@@ -7,7 +7,7 @@ signal is_dead()
 const HP_MAX: int = 1000
 var hp: int:
 	set(val):
-		hp = clamp(round(val), 0, 1000)
+		hp = clampi(round(val), 0, 1000)
 		hp_changed.emit(hp)
 		if hp == 0:
 			is_dead.emit()

@@ -132,6 +132,10 @@ u2={
 2d_physics/layer_2="Environment"
 2d_physics/layer_3="Projectile"
 
+[physics]
+
+2d/default_gravity=550.0
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

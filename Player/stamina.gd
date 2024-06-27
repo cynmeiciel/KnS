@@ -6,7 +6,7 @@ signal st_changed(new_st)
 const ST_MAX: int = 100
 var st: int:
 	set(val):
-		st = clamp(round(val), 0, 100)
+		st = clampi(round(val), 0, 100)
 		st_changed.emit(st)
 	get:
 		return st

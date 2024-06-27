@@ -1,4 +1,4 @@
-extends State
+extends OnFloorStateP
 class_name MoveStateP
 
 #func enter() -> void:
@@ -16,11 +16,16 @@ func update(_delta : float) -> void:
 	var direction = Input.get_axis(p_ctr.a, p_ctr.d)
 	if is_zero_approx(direction):
 		transits_to.emit("Idle")
+		return
+		
+	super.update(_delta)
 	
 func handle_input(ev : InputEvent) -> void:
 	if ev.is_action_pressed(p_ctr.s):
 		transits_to.emit("Block")
 		return
+	
+	super.handle_input(ev)
 	
 #func physics_update(_delta : float) -> void:
 	#pass

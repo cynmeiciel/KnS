@@ -31,7 +31,7 @@ func _physics_process(delta):
 
 func transition(new_state: String) -> void:
 	if not has_node(new_state):
-		assert("Does not have {state}".format({"state" : new_state}))
+		assert("Does not have %s" % new_state)
 		return
 	
 	curr_state.exit()
