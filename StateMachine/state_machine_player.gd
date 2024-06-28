@@ -8,10 +8,11 @@ func _ready():
 		if state is State:
 			state.p_anim = $"../AnimatedSprite2D"
 			state.p_ctr = owner.p_ctr
+			state.p_col = $"../Collision"
 	
 
-func transition(new_state : String) -> void:
-	super.transition(new_state)
+#func transition(new_state : String) -> void:
+	#super.transition(new_state)
 
 func _unhandled_input(event):
 	# Here we only handle input that can interrupt states, otherwise we let the state node handle it.

@@ -6,6 +6,7 @@ signal transits_to(new_state)
 
 var p_anim : AnimatedSprite2D
 var p_ctr : PlayerControl
+var p_col : CollisionShape2D
 
 func enter() -> void:
 	print("Transitioned to %s" % self.name)

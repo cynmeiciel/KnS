@@ -7,12 +7,11 @@ const JUMP_VELOCITY = -470.0
 @onready var p_anim := $AnimatedSprite2D
 @export var p_ctr : PlayerControl = null
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var direction: float = 0
-
-func _physics_process(_delta):
-	pass
+func get_facing_sign() -> int:
+	return -1 if p_anim.flip_h else 1
+#
+#func _physics_process(_delta):
+	#pass
 	# Handle jump.
 	#if Input.is_action_just_pressed(p_ctr.w) and is_on_floor():
 		#velocity.y = JUMP_VELOCITY

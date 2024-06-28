@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b7u8brji28up2"]
+[gd_scene load_steps=28 format=3 uid="uid://b7u8brji28up2"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_q5g7w"]
 [ext_resource type="Texture2D" uid="uid://bb8y5tj3npc48" path="res://asset/eiki_stick1.png" id="2_2go1e"]
@@ -24,6 +24,10 @@ region = Rect2(240, 160, 80, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_4m7ui"]
 atlas = ExtResource("2_2go1e")
 region = Rect2(0, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qisd"]
+atlas = ExtResource("2_2go1e")
+region = Rect2(160, 160, 80, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a0y63"]
 atlas = ExtResource("2_2go1e")
@@ -77,6 +81,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_6qisd")
+}],
+"loop": false,
+"name": &"dash",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_a0y63")
 }, {
 "duration": 1.0,
@@ -110,6 +122,8 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hrr86"]
+
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(40, 33)
 collision_mask = 7
@@ -135,8 +149,13 @@ script = ExtResource("5_6he5r")
 [node name="Dash" type="Node" parent="StateMachine"]
 script = ExtResource("8_aacly")
 
-[node name="DashCooldown" type="Timer" parent="StateMachine/Dash"]
-wait_time = 0.4
+[node name="DashDelay" type="Timer" parent="StateMachine/Dash"]
+unique_name_in_owner = true
+wait_time = 0.38
+one_shot = true
+
+[node name="DashDuration" type="Timer" parent="StateMachine/Dash"]
+wait_time = 0.2
 one_shot = true
 
 [node name="Air" type="Node" parent="StateMachine"]
@@ -171,13 +190,13 @@ script = ExtResource("10_f62f3")
 unique_name_in_owner = true
 script = ExtResource("11_jttmc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_f5mm6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ygs45")
-animation = &"air"
+animation = &"dash"
 autoplay = "idle"
 offset = Vector2(0, -13)
 
@@ -186,3 +205,11 @@ offset_left = -41.0
 offset_top = -26.0
 offset_right = -41.0
 offset_bottom = -26.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(23, 3)
+shape = SubResource("RectangleShape2D_hrr86")
+
+[connection signal="timeout" from="StateMachine/Dash/DashDuration" to="StateMachine/Dash" method="_on_dash_duration_timeout"]

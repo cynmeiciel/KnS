@@ -17,7 +17,6 @@ func update(_delta: float) -> void:
 		transits_to.emit("Block")
 		return
 		
-	var direction = Input.get_axis(p_ctr.a, p_ctr.d)
 	if direction:
 		transits_to.emit("Move")
 		return
@@ -26,6 +25,10 @@ func update(_delta: float) -> void:
 
 
 #func handle_input(ev : InputEvent) -> void:
+	#if ev.is_action_pressed(p_ctr.j):
+		#transits_to.emit("Dash")
+	#
+	#super.handle_input(ev)
 	
 #func physics_update(_delta : float) -> void:
 	#pass

@@ -17,7 +17,6 @@ func update(_delta : float) -> void:
 		transits_to.emit("Block")
 		return
 	
-	var direction = Input.get_axis(p_ctr.a, p_ctr.d)
 	if is_zero_approx(direction):
 		transits_to.emit("Idle")
 		return

@@ -41,9 +41,11 @@ func update_facing() -> void:
 func update(_delta : float) -> void:
 	update_facing()
 
-#func handle_input(_ev : InputEvent) -> void:
-	#pass
-#
+func handle_input(_ev : InputEvent) -> void:
+	if _ev.is_action_pressed(p_ctr.j):
+		if %DashDelay.is_stopped():
+			transits_to.emit("Dash")
+
 func physics_update(_delta : float) -> void:
 	direction = get_horizontal_input()
 	
