@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://edxa7rr3e0kx"]
+
+[sub_resource type="GDScript" id="GDScript_uq3p4"]
+script/source = "extends Resource
+class_name AttackSequence"
+
+[resource]
+script = SubResource("GDScript_uq3p4")

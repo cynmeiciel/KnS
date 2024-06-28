@@ -2,7 +2,6 @@ extends MotionStateP
 class_name AirStateP
 
 var can_jump_on_air: bool = true
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func enter() -> void:
 	$KeyDelay.start()
@@ -27,9 +26,9 @@ func update(_delta : float) -> void:
 
 
 func handle_input(_ev : InputEvent) -> void:
-	if not $KeyDelay.is_stopped():
-		if _ev.is_action_pressed(p_ctr.g):
-			print("lool")
+	#if not $KeyDelay.is_stopped():
+		#if _ev.is_action_pressed(p_ctr.g):
+			#print("lool")
 		
 	if _ev.is_action_pressed(p_ctr.w):
 		if can_jump_on_air and $AirJumpDelay.is_stopped():

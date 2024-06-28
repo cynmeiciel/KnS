@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b7u8brji28up2"]
+[gd_scene load_steps=39 format=3 uid="uid://b7u8brji28up2"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_q5g7w"]
 [ext_resource type="Texture2D" uid="uid://bb8y5tj3npc48" path="res://asset/eiki_stick1.png" id="2_2go1e"]
@@ -9,13 +9,37 @@
 [ext_resource type="Script" path="res://StateMachine/block.gd" id="5_6he5r"]
 [ext_resource type="Script" path="res://StateMachine/air.gd" id="6_x3fcm"]
 [ext_resource type="PackedScene" uid="uid://kjk8ohhfeno" path="res://Debug/debug_player.tscn" id="7_m3551"]
+[ext_resource type="Script" path="res://StateMachine/superdash.gd" id="8_0l5cn"]
 [ext_resource type="Script" path="res://StateMachine/dash.gd" id="8_aacly"]
+[ext_resource type="Script" path="res://Player/stats.gd" id="10_1l2xe"]
 [ext_resource type="Script" path="res://Player/mana.gd" id="10_f62f3"]
+[ext_resource type="Script" path="res://StateMachine/attack.gd" id="10_gu6pk"]
 [ext_resource type="Script" path="res://Player/stamina.gd" id="11_jttmc"]
 [ext_resource type="Script" path="res://Player/health.gd" id="11_pbic4"]
+[ext_resource type="Texture2D" uid="uid://cnjy0qqrmwpnn" path="res://asset/eiki_stickg12.png" id="15_rq0fd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f5mm6"]
 height = 52.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eyv14"]
+atlas = ExtResource("15_rq0fd")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puvys"]
+atlas = ExtResource("15_rq0fd")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cxou"]
+atlas = ExtResource("15_rq0fd")
+region = Rect2(160, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax8tk"]
+atlas = ExtResource("15_rq0fd")
+region = Rect2(0, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hlucu"]
+atlas = ExtResource("15_rq0fd")
+region = Rect2(80, 80, 80, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oqcdf"]
 atlas = ExtResource("2_2go1e")
@@ -61,8 +85,41 @@ region = Rect2(240, 160, 80, 80)
 atlas = ExtResource("2_2go1e")
 region = Rect2(320, 160, 80, 80)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_onxdb"]
+atlas = ExtResource("2_2go1e")
+region = Rect2(240, 160, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1t8ts"]
+atlas = ExtResource("2_2go1e")
+region = Rect2(160, 160, 80, 80)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ygs45"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyv14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puvys")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5cxou")
+}],
+"loop": false,
+"name": &"_a_g1",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ax8tk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hlucu")
+}],
+"loop": false,
+"name": &"_a_g2",
+"speed": 28.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oqcdf")
@@ -120,18 +177,32 @@ animations = [{
 "loop": true,
 "name": &"move",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onxdb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1t8ts")
+}],
+"loop": false,
+"name": &"superdash",
+"speed": 1.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hrr86"]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("enemy")]
 position = Vector2(40, 33)
-collision_mask = 7
+collision_mask = 23
 floor_stop_on_slope = false
 platform_floor_layers = 4294967290
 safe_margin = 0.3
 script = ExtResource("1_q5g7w")
 p_ctr = ExtResource("2_f3poj")
+enemy = NodePath(".")
+
+[node name="StatusHandler" type="Node" parent="."]
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_5uvqm")
@@ -151,11 +222,19 @@ script = ExtResource("8_aacly")
 
 [node name="DashDelay" type="Timer" parent="StateMachine/Dash"]
 unique_name_in_owner = true
-wait_time = 0.38
+wait_time = 0.45
 one_shot = true
 
 [node name="DashDuration" type="Timer" parent="StateMachine/Dash"]
-wait_time = 0.2
+unique_name_in_owner = true
+wait_time = 0.24
+one_shot = true
+
+[node name="SuperDash" type="Node" parent="StateMachine"]
+script = ExtResource("8_0l5cn")
+
+[node name="SuperDashDuration" type="Timer" parent="StateMachine/SuperDash"]
+wait_time = 0.15
 one_shot = true
 
 [node name="Air" type="Node" parent="StateMachine"]
@@ -171,12 +250,25 @@ wait_time = 0.35
 one_shot = true
 
 [node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("10_gu6pk")
+
+[node name="BlinkDelay" type="Timer" parent="StateMachine/Attack"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="AttackDelay" type="Timer" parent="StateMachine/Attack"]
+
+[node name="AttackToleration" type="Timer" parent="StateMachine/Attack"]
+
+[node name="Channel" type="Node" parent="StateMachine"]
 
 [node name="Vulnerable" type="Node" parent="StateMachine"]
 
 [node name="Knocked" type="Node" parent="StateMachine"]
 
-[node name="Stats" type="Node" parent="."]
+[node name="Stats" type="Node" parent="." node_paths=PackedStringArray("debuglayers")]
+script = ExtResource("10_1l2xe")
+debuglayers = NodePath("../DEBUG_Player")
 
 [node name="Health" type="Node" parent="Stats"]
 unique_name_in_owner = true
@@ -190,26 +282,31 @@ script = ExtResource("10_f62f3")
 unique_name_in_owner = true
 script = ExtResource("11_jttmc")
 
+[node name="RegenDelay" type="Timer" parent="Stats/Stamina"]
+wait_time = 1.5
+
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_f5mm6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ygs45")
-animation = &"dash"
+animation = &"_a_g2"
 autoplay = "idle"
 offset = Vector2(0, -13)
 
-[node name="DEBUG_Player" parent="." instance=ExtResource("7_m3551")]
-offset_left = -41.0
-offset_top = -26.0
-offset_right = -41.0
-offset_bottom = -26.0
+[node name="Hitbox" type="Area2D" parent="."]
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(23, 3)
 shape = SubResource("RectangleShape2D_hrr86")
 
+[node name="DEBUG_Player" parent="." instance=ExtResource("7_m3551")]
+offset_left = -39.0
+offset_top = -24.0
+offset_right = -39.0
+offset_bottom = -24.0
+
 [connection signal="timeout" from="StateMachine/Dash/DashDuration" to="StateMachine/Dash" method="_on_dash_duration_timeout"]
+[connection signal="timeout" from="Stats/Stamina/RegenDelay" to="Stats/Stamina" method="_on_regen_delay_timeout"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]

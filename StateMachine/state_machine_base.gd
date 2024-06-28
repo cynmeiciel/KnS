@@ -31,12 +31,14 @@ func _physics_process(delta):
 
 func transition(new_state: String) -> void:
 	if not has_node(new_state):
-		assert("Does not have %s" % new_state)
+		print_debug("Does not have %s" % new_state)
 		return
-	
-	curr_state.exit()
-	
-	curr_state = get_node(new_state)
-	
-	curr_state.enter()
-	transitioned.emit(curr_state.name)
+		
+	var next: State = get_node(new_state)
+	if next.can_enter():
+		curr_state.exit()
+		
+		curr_state = next
+		
+		curr_state.enter()
+		transitioned.emit(curr_state.name)

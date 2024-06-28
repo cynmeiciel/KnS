@@ -16,6 +16,10 @@ run/main_scene="res://Scene/TestStage.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Hudui="*res://Scene/HUD/hudui.tscn"
+
 [display]
 
 window/size/viewport_width=1920
@@ -23,6 +27,10 @@ window/size/viewport_height=1080
 window/size/window_width_override=1400
 window/size/window_height_override=700
 window/vsync/vsync_mode=0
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 
@@ -130,8 +138,10 @@ u2={
 [layer_names]
 
 2d_physics/layer_1="Player"
-2d_physics/layer_2="Environment"
-2d_physics/layer_3="Projectile"
+2d_physics/layer_2="Bound"
+2d_physics/layer_3="Attack"
+2d_physics/layer_4="Untargetable"
+2d_physics/layer_5="Platform"
 
 [physics]
 

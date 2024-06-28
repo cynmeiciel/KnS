@@ -43,8 +43,9 @@ func update(_delta : float) -> void:
 
 func handle_input(_ev : InputEvent) -> void:
 	if _ev.is_action_pressed(p_ctr.j):
-		if %DashDelay.is_stopped():
-			transits_to.emit("Dash")
+		transits_to.emit("Dash")
+	elif _ev.is_action_pressed(p_ctr.g):
+		transits_to.emit("Attack")
 
 func physics_update(_delta : float) -> void:
 	direction = get_horizontal_input()

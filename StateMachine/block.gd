@@ -19,7 +19,10 @@ func update(_delta : float) -> void:
 	super.update(_delta)
 	
 func handle_input(_ev : InputEvent) -> void:
-	pass
+	if _ev.is_action_pressed(p_ctr.j):
+		transits_to.emit("SuperDash")
+	elif _ev.is_action_pressed(p_ctr.w):
+		pass
 	
 func physics_update(_delta : float) -> void:
 	owner.velocity.x = move_toward(owner.velocity.x, 0, acceleration*_delta)

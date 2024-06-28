@@ -82,14 +82,16 @@ one_way_collision = true
 
 [node name="Player" type="Node" parent="."]
 
-[node name="Player1" parent="Player" instance=ExtResource("1_xuftq")]
+[node name="Player1" parent="Player" node_paths=PackedStringArray("enemy") instance=ExtResource("1_xuftq")]
 unique_name_in_owner = true
 position = Vector2(-95, 131)
+enemy = NodePath("../Player2")
 
-[node name="Player2" parent="Player" instance=ExtResource("1_xuftq")]
+[node name="Player2" parent="Player" node_paths=PackedStringArray("enemy") instance=ExtResource("1_xuftq")]
 unique_name_in_owner = true
 position = Vector2(146, 146)
 p_ctr = ExtResource("5_mscj8")
+enemy = NodePath("../Player1")
 
 [node name="Index" parent="Player/Player2/DEBUG_Player" index="2"]
 text = "P2"

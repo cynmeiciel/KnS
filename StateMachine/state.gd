@@ -8,6 +8,11 @@ var p_anim : AnimatedSprite2D
 var p_ctr : PlayerControl
 var p_col : CollisionShape2D
 
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+func can_enter() -> bool:
+	return true
+
 func enter() -> void:
 	print("Transitioned to %s" % self.name)
 	p_anim.play(self.name.to_lower())

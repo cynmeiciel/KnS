@@ -7,6 +7,7 @@ const ST_MAX: int = 100
 var st: int:
 	set(val):
 		st = clampi(round(val), 0, 100)
+		$RegenDelay.start(1.5)
 		st_changed.emit(st)
 	get:
 		return st
@@ -15,10 +16,12 @@ var st: int:
 func _ready():
 	st = ST_MAX
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
-
-#func _unhandled_input(event):
-	#pass
+	
+func _on_regen_delay_timeout():
+	st += 3
+	$RegenDelay.start(0.2)
+	if st == ST_MAX:
+		$RegenDelay.stop()
