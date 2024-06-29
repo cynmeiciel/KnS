@@ -14,13 +14,16 @@ func enter() -> void:
 	
 func update(_delta : float) -> void:
 	if owner.is_on_floor():
-		if direction:
-			transits_to.emit("Move")
-		else:
-			transits_to.emit("Idle")
 		can_jump_on_air = true
+		if $JumpTolerance.is_stopped():
+			if direction:
+				transits_to.emit("Move")
+			else:
+				transits_to.emit("Idle")
+			return
 		
-		return
+		else:
+			jump()
 		
 	super.update(_delta)
 
@@ -34,6 +37,8 @@ func handle_input(_ev : InputEvent) -> void:
 		if can_jump_on_air and $AirJumpDelay.is_stopped():
 			jump()
 			can_jump_on_air = false
+		else:
+			$JumpTolerance.start()
 	
 	super.handle_input(_ev)
 

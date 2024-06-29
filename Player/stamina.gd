@@ -7,7 +7,7 @@ const ST_MAX: int = 100
 var st: int:
 	set(val):
 		st = clampi(round(val), 0, 100)
-		$RegenDelay.start(1.5)
+		$RegenDelay.start(1.2)
 		st_changed.emit(st)
 	get:
 		return st

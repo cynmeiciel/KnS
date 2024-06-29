@@ -1,9 +1,10 @@
 extends OnFloorStateP
 class_name MoveStateP
 
-#func enter() -> void:
-	#print_debug("Transitioned to Move")
-	#p_anim.play("move")
+func enter() -> void:
+	direction = get_horizontal_input()
+	update_facing()
+	super.enter()
 	
 #func exit() -> void:
 	#pass

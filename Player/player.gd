@@ -36,25 +36,19 @@ func toggle_untargetable(to_untr) -> void:
 		p_anim.modulate = Color(modulate, 1)
 
 func blink_to_enemy(marginx: float = 40, marginy: float = 0, scalar: int = 1,
-				 max_distance: float = 0, _delay: float = 0, turn_around: bool = true) -> void:
-	if _delay != 0:
-		%BlinkDelay.start(_delay)
-		await %BlinkDelay.timeout
+				 max_distance: float = 0, turn_around: bool = true) -> void:
 	var destinationx: float = enemy.position.x + marginx*scalar*get_facing_sign()
 	if max_distance != 0:
 		destinationx = move_toward(position.x, destinationx, max_distance)
 	position = Vector2(destinationx, enemy.position.y+marginy)
 	if turn_around:
 		p_anim.flip_h = not p_anim.flip_h
-
-
+		
 func dash_to_enemy(marginx: float = 30, scalar: int = 1,
-			 max_distance: float = 1000, _delay: float = 0) -> void:
+			 max_distance: float = 1000) -> void:
 	if max_distance == 0:
+		push_error("max_distance cannot be zero!")
 		return
-	if _delay != 0:
-		%BlinkDelay.start(_delay)
-		await %BlinkDelay.timeout
 	var destinationx: float = enemy.position.x - marginx*scalar*get_facing_sign()
 	destinationx = move_toward(position.x, destinationx, max_distance*get_enemy_direction()*get_facing_sign())
 	position = Vector2(destinationx, position.y)

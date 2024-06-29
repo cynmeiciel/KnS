@@ -25,4 +25,6 @@ func _unhandled_input(event):
 	if event.is_action_pressed(p_ctr.y):
 		owner.dash_to_enemy()
 		return
+	if event.is_action_pressed(p_ctr.u):
+		%Mana.mp -= 330
 	curr_state.handle_input(event)

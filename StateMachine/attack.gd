@@ -4,21 +4,25 @@ class_name AttackStateP
 const ATK_STCOST: Array[int] = [6, 11]
 @export var CharAtkInfo: Resource  # MP costs also stored here
 
-var curr_atk: String = ""
-var next_atk: String = "g1"
 # Attack code format: <button><?button?><sequence>
 # For example: g2 means the action when 'g' is performed twice
+var curr_atk: String = ""
+var next_atk: String = "g1"
+
+# Whether the player can interrupt the state with another input
+var can_break: bool = false
 
 func get_atk_button(full: bool = true, atk: String = curr_atk) -> String:
 	match atk.length():
 		3:
-			return atk[0]+atk[1] if full else atk[0]
+			return atk.substr(0, 1) if full else atk[1]
 		2:
 			return atk[0]
 		4:
 			return "tyu"
 		_:
-			return "bruh?"
+			assert(false, "Invalid attack code")
+			return "bruh"
 			
 
 func is_next_atk_valid() -> bool:
@@ -60,11 +64,15 @@ func update(_delta : float) -> void:
 
 func handle_input(_ev : InputEvent) -> void:
 	if _ev.is_action_pressed(p_ctr.g):
-		transits_to.emit("Attack")
+		transits_atk.emit("g")
 
 func physics_update(_delta : float) -> void:
 	pass
 
-
 func _on_animated_sprite_2d_animation_finished():
-	transits_to.emit("Idle")
+	$AttackWait.start()
+
+func _on_attack_wait_timeout():
+	if _active:
+		transits_to.emit("Idle")
+

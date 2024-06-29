@@ -45,11 +45,11 @@ func handle_input(_ev : InputEvent) -> void:
 	if _ev.is_action_pressed(p_ctr.j):
 		transits_to.emit("Dash")
 	elif _ev.is_action_pressed(p_ctr.g):
-		transits_to.emit("Attack")
+		transits_atk.emit("g")
 
 func physics_update(_delta : float) -> void:
 	direction = get_horizontal_input()
-	
+
 	if direction:
 		owner.velocity.x = move_toward(owner.velocity.x, direction*velocity, acceleration*_delta)
 	else:

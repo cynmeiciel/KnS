@@ -18,6 +18,7 @@ func _ready():
 		if child is State:
 			states[child.name] = child
 			child.transits_to.connect(transition)
+			child.transits_atk.connect(transition_atk)
 	curr_state.enter()
 	
 func _unhandled_input(event):
@@ -29,16 +30,22 @@ func _process(delta):
 func _physics_process(delta):
 	curr_state.physics_update(delta)
 
-func transition(new_state: String) -> void:
-	if not has_node(new_state):
-		print_debug("Does not have %s" % new_state)
-		return
+func transition(new_state: String, do_assert: bool = true) -> void:
+	if do_assert:
+		assert(has_node(new_state), "Does not have %s" % new_state)
+		assert(new_state != "Attack", "Can only transition to attack state with the specific transition signal!")
 		
 	var next: State = get_node(new_state)
 	if next.can_enter():
 		curr_state.exit()
+		curr_state._active = false
 		
 		curr_state = next
 		
 		curr_state.enter()
+		curr_state._active = true
 		transitioned.emit(curr_state.name)
+
+func transition_atk(atk_code: String) -> void:
+	assert(atk_code.length() <= 2 or atk_code == "tyu", "Invalid attack code!")
+	transition("Attack", false)

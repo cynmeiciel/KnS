@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://kjk8ohhfeno"]
+[gd_scene load_steps=14 format=3 uid="uid://kjk8ohhfeno"]
 
+[ext_resource type="Script" path="res://Debug/debugatk.gd" id="1_4lcqh"]
 [ext_resource type="Script" path="res://Debug/debugstate.gd" id="1_tgkux"]
 [ext_resource type="Script" path="res://Debug/debugvel.gd" id="2_grj1s"]
 [ext_resource type="Script" path="res://Debug/debughp.gd" id="2_tf61t"]
@@ -39,16 +40,17 @@ offset_top = -42.0
 offset_right = 6.0
 offset_bottom = -42.0
 
-[node name="Action" type="Label" parent="."]
+[node name="Attack" type="Label" parent="."]
 texture_filter = 1
 layout_mode = 0
 offset_left = 18.0
 offset_top = -35.0
 offset_right = 66.0
 offset_bottom = -12.0
-text = "action"
+text = "attack"
 label_settings = SubResource("LabelSettings_6w8v3")
 horizontal_alignment = 1
+script = ExtResource("1_4lcqh")
 
 [node name="State" type="Label" parent="."]
 texture_filter = 1
