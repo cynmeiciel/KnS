@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://b7u8brji28up2"]
+[gd_scene load_steps=39 format=3 uid="uid://b7u8brji28up2"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_q5g7w"]
 [ext_resource type="Texture2D" uid="uid://bb8y5tj3npc48" path="res://asset/eiki_stick1.png" id="2_2go1e"]
@@ -16,7 +16,6 @@
 [ext_resource type="Script" path="res://StateMachine/attack.gd" id="10_gu6pk"]
 [ext_resource type="Script" path="res://Player/stamina.gd" id="11_jttmc"]
 [ext_resource type="Script" path="res://Player/health.gd" id="11_pbic4"]
-[ext_resource type="Resource" uid="uid://ck3hf6caguefp" path="res://Player/charinfo.tres" id="11_ycqcr"]
 [ext_resource type="Texture2D" uid="uid://cnjy0qqrmwpnn" path="res://asset/eiki_stickg12.png" id="15_rq0fd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f5mm6"]
@@ -100,26 +99,26 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_eyv14")
 }, {
-"duration": 3.0,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_puvys")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_5cxou")
 }],
 "loop": false,
 "name": &"_a_g1",
-"speed": 30.0
+"speed": 25.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 2.0,
 "texture": SubResource("AtlasTexture_ax8tk")
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": SubResource("AtlasTexture_hlucu")
 }],
 "loop": false,
 "name": &"_a_g2",
-"speed": 28.0
+"speed": 25.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -256,7 +255,6 @@ one_shot = true
 
 [node name="Attack" type="Node" parent="StateMachine"]
 script = ExtResource("10_gu6pk")
-CharAtkInfo = ExtResource("11_ycqcr")
 
 [node name="BlinkDelay" type="Timer" parent="StateMachine/Attack"]
 unique_name_in_owner = true
@@ -265,8 +263,6 @@ one_shot = true
 [node name="AttackWait" type="Timer" parent="StateMachine/Attack"]
 wait_time = 0.25
 one_shot = true
-
-[node name="AttackTolerance" type="Timer" parent="StateMachine/Attack"]
 
 [node name="Vulnerable" type="Node" parent="StateMachine"]
 
@@ -319,5 +315,4 @@ offset_bottom = -24.0
 [connection signal="timeout" from="StateMachine/Attack/AttackWait" to="StateMachine/Attack" method="_on_attack_wait_timeout"]
 [connection signal="timeout" from="Stats/Mana/Regen" to="Stats/Mana" method="_on_regen_timeout"]
 [connection signal="timeout" from="Stats/Stamina/RegenDelay" to="Stats/Stamina" method="_on_regen_delay_timeout"]
-[connection signal="animation_changed" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_animation_changed"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]

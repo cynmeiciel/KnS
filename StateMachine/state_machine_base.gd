@@ -58,3 +58,5 @@ func transition_atk(atk_code: String) -> void:
 		if curr_state.can_enter():
 			curr_state.enter()
 			transitioned.emit(curr_state.name)
+		#else:
+			#transition("Idle")

@@ -1,7 +1,8 @@
 extends MotionStateP
 class_name AirStateP
 
-var can_jump_on_air: bool = true
+@export var MAX_AIR_JUMP: int = 1
+var remaining_jump: int = MAX_AIR_JUMP
 
 func enter() -> void:
 	$KeyDelay.start()
@@ -14,7 +15,7 @@ func enter() -> void:
 	
 func update(_delta : float) -> void:
 	if owner.is_on_floor():
-		can_jump_on_air = true
+		remaining_jump = MAX_AIR_JUMP
 		if $JumpTolerance.is_stopped():
 			if direction:
 				transits_to.emit("Move")
@@ -34,9 +35,9 @@ func handle_input(_ev : InputEvent) -> void:
 			#print("lool")
 		
 	if _ev.is_action_pressed(p_ctr.w):
-		if can_jump_on_air and $AirJumpDelay.is_stopped():
+		if remaining_jump and $AirJumpDelay.is_stopped():
 			jump()
-			can_jump_on_air = false
+			remaining_jump -= 1
 		else:
 			$JumpTolerance.start()
 	

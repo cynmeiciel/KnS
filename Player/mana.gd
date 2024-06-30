@@ -16,7 +16,8 @@ var mp: int:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	mp = MP_MAX
+	mp = 0
+	$Regen.start()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,6 +31,6 @@ func _process(_delta):
 
 func _on_regen_timeout():
 	mp += 1
-	$Regen.start(0.01)
+	$Regen.start(mp/(MP_MAX*2.0))
 	if mp == MP_MAX:
 		$Regen.stop()
