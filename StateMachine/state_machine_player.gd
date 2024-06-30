@@ -3,6 +3,7 @@ class_name StateMachinePlayer
 
 var p_ctr : PlayerControl
 
+
 func _ready():
 	super._ready()
 	for state in get_children():

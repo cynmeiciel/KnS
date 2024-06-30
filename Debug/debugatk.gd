@@ -4,4 +4,4 @@ extends Label
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	text = atk_node.curr_atk.to_upper() if atk_node._active else "_"
+	text = atk_node.curr_atk.to_str(true).to_upper() if atk_node._active else "_"

@@ -100,7 +100,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_eyv14")
 }, {
-"duration": 3.0,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_puvys")
 }, {
 "duration": 1.0,
@@ -195,7 +195,7 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("enemy")]
 position = Vector2(40, 33)
-collision_mask = 39
+collision_mask = 23
 floor_stop_on_slope = false
 platform_floor_layers = 4294967290
 safe_margin = 0.3
@@ -263,7 +263,7 @@ unique_name_in_owner = true
 one_shot = true
 
 [node name="AttackWait" type="Timer" parent="StateMachine/Attack"]
-wait_time = 0.25
+wait_time = 0.15
 one_shot = true
 
 [node name="AttackTolerance" type="Timer" parent="StateMachine/Attack"]
@@ -299,7 +299,7 @@ shape = SubResource("CapsuleShape2D_f5mm6")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ygs45")
-animation = &"_a_g1"
+animation = &"_a_g2"
 autoplay = "idle"
 offset = Vector2(0, -13)
 
@@ -319,5 +319,4 @@ offset_bottom = -24.0
 [connection signal="timeout" from="StateMachine/Attack/AttackWait" to="StateMachine/Attack" method="_on_attack_wait_timeout"]
 [connection signal="timeout" from="Stats/Mana/Regen" to="Stats/Mana" method="_on_regen_timeout"]
 [connection signal="timeout" from="Stats/Stamina/RegenDelay" to="Stats/Stamina" method="_on_regen_delay_timeout"]
-[connection signal="animation_changed" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_animation_changed"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]

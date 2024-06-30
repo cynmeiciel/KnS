@@ -15,7 +15,7 @@ config/version="Beta 0.0.1"
 config/tags=PackedStringArray("2d")
 run/main_scene="res://Scene/TestStage.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 
@@ -142,7 +142,8 @@ u2={
 2d_physics/layer_2="Bound"
 2d_physics/layer_3="Attack"
 2d_physics/layer_4="Untargetable"
-2d_physics/layer_5="Platform"
+2d_physics/layer_5="notAbsUntr"
+2d_physics/layer_6="Platform"
 
 [physics]
 

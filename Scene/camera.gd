@@ -5,7 +5,7 @@ var _W: float
 var _H: float
 const WMIN_ZOOM_DIST = 530
 var HMIN_ZOOM_DIST: float
-const MARGIN := 200
+const MARGIN := 150
 
 func get_new_pos() -> Vector2:
 	return (%Player1.position + %Player2.position) / 2

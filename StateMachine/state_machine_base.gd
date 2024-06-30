@@ -9,6 +9,7 @@ signal transitioned(state_name)
 
 # The current active state. At the start of the game, we get the `initial_state`.
 @onready var curr_state: State = get_node(initial_state)
+@onready var atk_node: AttackStateP = $Attack
 
 var states: Dictionary = {}
 
@@ -18,7 +19,8 @@ func _ready():
 		if child is State:
 			states[child.name] = child
 			child.transits_to.connect(transition)
-			child.transits_atk.connect(transition_atk)
+			child.transits_atk.connect(transition_atk) 
+	
 	curr_state.enter()
 	
 func _unhandled_input(event):
@@ -48,4 +50,11 @@ func transition(new_state: String, do_assert: bool = true) -> void:
 
 func transition_atk(atk_code: String) -> void:
 	assert(atk_code.length() <= 2 or atk_code == "tyu", "Invalid attack code!")
-	transition("Attack", false)
+	atk_node.next_atk = AtkCode.new("", atk_code)
+	if curr_state.name != "Attack":
+		transition("Attack", false)
+	
+	else:
+		if curr_state.can_enter():
+			curr_state.enter()
+			transitioned.emit(curr_state.name)
