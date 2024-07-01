@@ -48,7 +48,7 @@ func handle_atk_input(_ev: InputEvent) -> void:
 			if key in [p_ctr.g, p_ctr.h]:
 				transits_atk.emit(get_pending_mod()+key[0])
 			else:
-				handle_ult_input(key)
+				handle_ult_input(key[0])
 			break
 
 

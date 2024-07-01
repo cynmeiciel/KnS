@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b7u8brji28up2"]
+[gd_scene load_steps=42 format=3 uid="uid://b7u8brji28up2"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_q5g7w"]
 [ext_resource type="Texture2D" uid="uid://bb8y5tj3npc48" path="res://asset/eiki_stick1.png" id="2_2go1e"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://StateMachine/attack.gd" id="10_gu6pk"]
 [ext_resource type="Script" path="res://Player/stamina.gd" id="11_jttmc"]
 [ext_resource type="Script" path="res://Player/health.gd" id="11_pbic4"]
+[ext_resource type="Resource" uid="uid://ck3hf6caguefp" path="res://Player/charinfo.tres" id="11_vk4s8"]
 [ext_resource type="Texture2D" uid="uid://cnjy0qqrmwpnn" path="res://asset/eiki_stickg12.png" id="15_rq0fd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f5mm6"]
@@ -40,6 +41,18 @@ region = Rect2(0, 80, 80, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_hlucu"]
 atlas = ExtResource("15_rq0fd")
 region = Rect2(80, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgev3"]
+atlas = ExtResource("15_rq0fd")
+region = Rect2(80, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h28nn"]
+atlas = ExtResource("15_rq0fd")
+region = Rect2(80, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjq8s"]
+atlas = ExtResource("15_rq0fd")
+region = Rect2(0, 80, 80, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oqcdf"]
 atlas = ExtResource("2_2go1e")
@@ -121,6 +134,20 @@ animations = [{
 "speed": 25.0
 }, {
 "frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_fgev3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h28nn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjq8s")
+}],
+"loop": false,
+"name": &"_a_h1",
+"speed": 25.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oqcdf")
 }],
@@ -190,8 +217,6 @@ animations = [{
 "speed": 1.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hrr86"]
-
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("enemy")]
 position = Vector2(40, 33)
 collision_mask = 39
@@ -255,6 +280,7 @@ one_shot = true
 
 [node name="Attack" type="Node" parent="StateMachine"]
 script = ExtResource("10_gu6pk")
+CharInfo = ExtResource("11_vk4s8")
 
 [node name="BlinkDelay" type="Timer" parent="StateMachine/Attack"]
 unique_name_in_owner = true
@@ -298,15 +324,9 @@ shape = SubResource("CapsuleShape2D_f5mm6")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ygs45")
-animation = &"_a_g1"
+animation = &"_a_h1"
 autoplay = "idle"
 offset = Vector2(0, -13)
-
-[node name="Hitbox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(23, 3)
-shape = SubResource("RectangleShape2D_hrr86")
 
 [node name="DEBUG_Player" parent="." instance=ExtResource("7_m3551")]
 offset_left = -39.0

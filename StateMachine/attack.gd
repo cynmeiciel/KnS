@@ -14,7 +14,7 @@ var next_atk: AtkCode = AtkCode.new("", "", 0)
 var can_break: bool = false
 
 
-func get_atk_key(full: bool = true, atk: AtkCode = curr_atk) -> String:
+func get_atk_key(atk: AtkCode = curr_atk, full: bool = true) -> String:
 	if full:
 		return atk.modifier + atk.key
 	else:
@@ -29,12 +29,16 @@ func is_next_atk_valid() -> bool:
 		return true
 	
 	if curr_atk.same_key(next_atk):
-		curr_atk.to_next_seq()
-		return true
+		if curr_atk.sequence < CharInfo.MAX_SEQ[curr_atk.to_str()]:
+			curr_atk.to_next_seq()
+			return true
+		else:
+			return false
 	
-	#if next_atk.to_str() in CharInfo.SEQ[curr_atk.to_str()]:
-		#curr_atk = next_atk
-		#pass #TODO
+	for seq: String in CharInfo.SEQ[curr_atk.to_str(true)]:
+		if seq.begins_with(next_atk.to_str()):
+			curr_atk = AtkCode.from_string(seq, false)
+			return true
 
 	return false
 
@@ -45,7 +49,8 @@ func is_enough_cost() -> bool:
 
 
 func get_cost(atk: AtkCode = next_atk) -> Dictionary:
-	match get_atk_key(false, atk):
+	var key: StringName = get_atk_key(atk, false)
+	match key:
 		'g':
 			return create_cost(ATK_STCOST[0], 0)
 		'h':
@@ -72,6 +77,8 @@ func enter() -> void:
 	$AttackWait.stop()
 	%Mana.mp -= get_cost()["mp"]
 	%Stamina.st -= get_cost()["st"]
+	
+	perform(curr_atk)
 
 
 func exit() -> void:
@@ -84,10 +91,10 @@ func exit() -> void:
 
 
 func handle_input(_ev : InputEvent) -> void:
-	if _ev.is_action_pressed(p_ctr.a):
-		transits_to.emit("Idle")
 	if not $AttackWait.is_stopped():
 		handle_atk_input(_ev)
+	if _ev.is_action_pressed(p_ctr.a):
+		transits_to.emit("Idle")
 
 
 func physics_update(_delta : float) -> void:

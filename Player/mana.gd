@@ -18,7 +18,7 @@ func _ready():
 	mp = 0
 
 func _physics_process(_delta):
-	mp += 0.5/((mp+1)*_delta)
+	mp += 0.2/((mp/1.5+1)*_delta)
 
 #func _unhandled_input(event):
 	#if event.is_action_pressed("ui_accept"):
