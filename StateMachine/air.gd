@@ -4,14 +4,12 @@ class_name AirStateP
 @export var MAX_AIR_JUMP: int = 1
 var remaining_jump: int = MAX_AIR_JUMP
 
-func enter() -> void:
-	$KeyDelay.start()
-	
-	super.enter()
+#func enter() -> void:
+	#super.enter()
 
 	
-#func exit() -> void:
-	#pass
+func exit() -> void:
+	$KeyDelay.stop()
 	
 func update(_delta : float) -> void:
 	if owner.is_on_floor():
@@ -30,13 +28,11 @@ func update(_delta : float) -> void:
 
 
 func handle_input(_ev : InputEvent) -> void:
-	#if not $KeyDelay.is_stopped():
-		#if _ev.is_action_pressed(p_ctr.g):
-			#print("lool")
+	handle_atk_input(_ev) # "a" means "air"
 		
 	if _ev.is_action_pressed(p_ctr.w):
 		if remaining_jump and $AirJumpDelay.is_stopped():
-			jump()
+			jump(false)
 			remaining_jump -= 1
 		else:
 			$JumpTolerance.start()
@@ -48,3 +44,6 @@ func physics_update(delta : float) -> void:
 	owner.velocity.y += gravity * delta
 	
 	super.physics_update(delta)
+
+func get_pending_mod() -> String:
+	return "a" if ($KeyDelay.is_stopped() ) else "w"

@@ -17,7 +17,12 @@ var acceleration := ACCELERATION
 
 var direction: float = 0
 
-func jump() -> void:
+func _ready() -> void:
+	%PendingUlt.connect("timeout", _on_pending_timeout_to_perform_ult)
+
+func jump(from_floor: bool = true) -> void:
+	if from_floor:
+		$"../Air/KeyDelay".start()
 	owner.velocity.y = jump_velocity
 
 func get_horizontal_input() -> float:
@@ -41,11 +46,11 @@ func update_facing() -> void:
 func update(_delta : float) -> void:
 	update_facing()
 
+
 func handle_input(_ev : InputEvent) -> void:
 	if _ev.is_action_pressed(p_ctr.j):
 		transits_to.emit("Dash")
-	elif _ev.is_action_pressed(p_ctr.g):
-		transits_atk.emit("g")
+
 
 func physics_update(_delta : float) -> void:
 	direction = get_horizontal_input()
@@ -56,3 +61,6 @@ func physics_update(_delta : float) -> void:
 		owner.velocity.x = move_toward(owner.velocity.x, 0, acceleration*_delta)
 
 	owner.move_and_slide()
+
+
+

@@ -4,10 +4,10 @@ class_name Health
 signal hp_changed(new_hp)
 signal is_dead()
 
-const HP_MAX: int = 1000
-var hp: int:
+const HP_MAX: float = 1000
+var hp: float:
 	set(val):
-		hp = clampi(round(val), 0, 1000)
+		hp = clamp(val, 0, 1000)
 		hp_changed.emit(hp)
 		if hp == 0:
 			is_dead.emit()

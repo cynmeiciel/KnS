@@ -49,8 +49,8 @@ func transition(new_state: String, do_assert: bool = true) -> void:
 		transitioned.emit(curr_state.name)
 
 func transition_atk(atk_code: String) -> void:
-	assert(atk_code.length() <= 2 or atk_code == "tyu", "Invalid attack code!")
-	atk_node.next_atk = AtkCode.new("", atk_code)
+	assert(atk_code.length() <= 3, "Invalid attack code!")
+	atk_node.next_atk = AtkCode.from_string(atk_code)
 	if curr_state.name != "Attack":
 		transition("Attack", false)
 	

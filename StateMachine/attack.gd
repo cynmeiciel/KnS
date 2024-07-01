@@ -84,11 +84,10 @@ func exit() -> void:
 
 
 func handle_input(_ev : InputEvent) -> void:
-	#if _ev.is_action_pressed(p_ctr.g):
-		#$AttackTolerance.start()
+	if _ev.is_action_pressed(p_ctr.a):
+		transits_to.emit("Idle")
 	if not $AttackWait.is_stopped():
-		if _ev.is_action(p_ctr.g):
-			transits_atk.emit("g")
+		handle_atk_input(_ev)
 
 
 func physics_update(_delta : float) -> void:
@@ -102,4 +101,19 @@ func _on_animated_sprite_2d_animation_finished():
 
 func _on_attack_wait_timeout():
 	if _active:
-		transits_to.emit("Idle")
+		if owner.is_on_floor():
+			transits_to.emit("Idle")
+		else:
+			transits_to.emit("Air")
+
+#=================PERFORM====================#
+
+func perform(atk: AtkCode) -> void:
+	var code: StringName = atk.to_str(true)
+	
+	match code:
+		_:
+			pass
+		
+
+

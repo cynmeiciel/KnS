@@ -241,7 +241,7 @@ one_shot = true
 script = ExtResource("6_x3fcm")
 
 [node name="KeyDelay" type="Timer" parent="StateMachine/Air"]
-wait_time = 0.1
+wait_time = 0.05
 one_shot = true
 
 [node name="AirJumpDelay" type="Timer" parent="StateMachine/Air"]
@@ -264,6 +264,11 @@ one_shot = true
 wait_time = 0.25
 one_shot = true
 
+[node name="PendingUlt" type="Timer" parent="StateMachine/Attack"]
+unique_name_in_owner = true
+wait_time = 0.08
+one_shot = true
+
 [node name="Vulnerable" type="Node" parent="StateMachine"]
 
 [node name="Knocked" type="Node" parent="StateMachine"]
@@ -279,8 +284,6 @@ script = ExtResource("11_pbic4")
 [node name="Mana" type="Node" parent="Stats"]
 unique_name_in_owner = true
 script = ExtResource("10_f62f3")
-
-[node name="Regen" type="Timer" parent="Stats/Mana"]
 
 [node name="Stamina" type="Node" parent="Stats"]
 unique_name_in_owner = true
@@ -313,6 +316,5 @@ offset_bottom = -24.0
 
 [connection signal="timeout" from="StateMachine/Dash/DashDuration" to="StateMachine/Dash" method="_on_dash_duration_timeout"]
 [connection signal="timeout" from="StateMachine/Attack/AttackWait" to="StateMachine/Attack" method="_on_attack_wait_timeout"]
-[connection signal="timeout" from="Stats/Mana/Regen" to="Stats/Mana" method="_on_regen_timeout"]
 [connection signal="timeout" from="Stats/Stamina/RegenDelay" to="Stats/Stamina" method="_on_regen_delay_timeout"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]
