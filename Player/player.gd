@@ -7,7 +7,10 @@ class_name Player
 @export var p_ctr : PlayerControl = null
 @export var enemy : Player
 
-signal take_damamge(dmg: Damage)
+
+signal take_damage(dmg: Damage)
+signal is_dead(idx: int)
+
 enum {
 	stun,
 	invincible
@@ -18,10 +21,6 @@ var curr_status: Dictionary = {
 	invincible: 0
 	#...
 }
-
-#func _ready():
-	#var c: AtkCode = AtkCode.new("g")
-	#print(c.get_reference_count())
 
 
 func get_facing_sign() -> int:
@@ -65,18 +64,8 @@ func dash_to_enemy(marginx: float = 30, scalar: int = 1,
 	position = Vector2(destinationx, position.y)
 
 
-#func _physics_process(_delta):
-	#pass
-	# Handle jump.
-	#if Input.is_action_just_pressed(p_ctr.w) and is_on_floor():
-		#velocity.y = JUMP_VELOCITY
+func _take_damage(dmg: Damage) -> void:
+	if $StateMachine.curr_state is BlockStateP:
+		dmg.damage /= 10
+	take_damage.emit(dmg)
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	#direction = Input.get_axis(p_ctr.a, p_ctr.d)
-	#if direction:
-		#velocity.x = direction * SPEED
-#
-	#else:
-		#velocity.x = move_toward(velocity.x, 0, SPEED)
-#

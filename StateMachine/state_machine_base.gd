@@ -15,6 +15,9 @@ var states: Dictionary = {}
 
 func _ready():
 	await owner.ready
+	owner.take_damage.connect(take_damage)
+	owner.is_dead.connect(is_dead)
+	
 	for child in get_children():
 		if child is State:
 			states[child.name] = child
@@ -60,3 +63,16 @@ func transition_atk(atk_code: String) -> void:
 			transitioned.emit(curr_state.name)
 		#else:
 			#transition("Idle")
+
+func take_damage(dmg: Damage) -> void:
+	
+	if not curr_state is BlockStateP or dmg.overwhelm:
+		if dmg.knock_down:
+			transition("Knocked")
+		else:
+			transition("Vulnerable")
+
+func is_dead(_idx: int) -> void:
+	$Knocked.alive = false
+	transition("Knocked")
+	

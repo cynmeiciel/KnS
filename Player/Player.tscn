@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://b7u8brji28up2"]
+[gd_scene load_steps=73 format=3 uid="uid://b7u8brji28up2"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_q5g7w"]
 [ext_resource type="Texture2D" uid="uid://bb8y5tj3npc48" path="res://asset/eiki_stick1.png" id="2_2go1e"]
@@ -26,6 +26,9 @@
 [ext_resource type="Script" path="res://StateMachine/attack/sub_ty.gd" id="17_eqral"]
 [ext_resource type="Script" path="res://StateMachine/attack/sub_yu.gd" id="18_of1xe"]
 [ext_resource type="Script" path="res://StateMachine/attack/sub_tu.gd" id="19_rs7ec"]
+[ext_resource type="Script" path="res://StateMachine/vulnerable.gd" id="20_b45qy"]
+[ext_resource type="Script" path="res://StateMachine/knocked.gd" id="21_nhcww"]
+[ext_resource type="Script" path="res://Player/Area2D.gd" id="27_oek0b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f5mm6"]
 height = 52.0
@@ -154,6 +157,10 @@ region = Rect2(80, 0, 80, 80)
 atlas = ExtResource("2_2go1e")
 region = Rect2(160, 0, 80, 80)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfilm"]
+atlas = ExtResource("2_2go1e")
+region = Rect2(240, 80, 80, 80)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_8oo8l"]
 atlas = ExtResource("2_2go1e")
 region = Rect2(0, 160, 80, 80)
@@ -181,6 +188,10 @@ region = Rect2(240, 160, 80, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1t8ts"]
 atlas = ExtResource("2_2go1e")
 region = Rect2(160, 160, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m25ay"]
+atlas = ExtResource("2_2go1e")
+region = Rect2(160, 80, 80, 80)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ygs45"]
 animations = [{
@@ -349,6 +360,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_lfilm")
+}],
+"loop": true,
+"name": &"knocked",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_8oo8l")
 }, {
 "duration": 1.0,
@@ -377,7 +396,18 @@ animations = [{
 "loop": false,
 "name": &"superdash",
 "speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m25ay")
+}],
+"loop": false,
+"name": &"vulnerable",
+"speed": 5.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r7r20"]
+size = Vector2(26, 46)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("enemy")]
 position = Vector2(40, 33)
@@ -444,19 +474,6 @@ one_shot = true
 script = ExtResource("10_gu6pk")
 CharInfo = ExtResource("11_vk4s8")
 
-[node name="BlinkDelay" type="Timer" parent="StateMachine/Attack"]
-unique_name_in_owner = true
-one_shot = true
-
-[node name="AttackWait" type="Timer" parent="StateMachine/Attack"]
-wait_time = 0.25
-one_shot = true
-
-[node name="PendingUlt" type="Timer" parent="StateMachine/Attack"]
-unique_name_in_owner = true
-wait_time = 0.08
-one_shot = true
-
 [node name="Sub" type="Node" parent="StateMachine/Attack"]
 
 [node name="g" type="Node" parent="StateMachine/Attack/Sub"]
@@ -485,9 +502,31 @@ script = ExtResource("18_of1xe")
 [node name="tu" type="Node" parent="StateMachine/Attack/Sub"]
 script = ExtResource("19_rs7ec")
 
+[node name="BlinkDelay" type="Timer" parent="StateMachine/Attack"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="AttackWait" type="Timer" parent="StateMachine/Attack"]
+wait_time = 0.25
+one_shot = true
+
+[node name="PendingUlt" type="Timer" parent="StateMachine/Attack"]
+unique_name_in_owner = true
+wait_time = 0.08
+one_shot = true
+
 [node name="Vulnerable" type="Node" parent="StateMachine"]
+script = ExtResource("20_b45qy")
+
+[node name="VulDuration" type="Timer" parent="StateMachine/Vulnerable"]
+one_shot = true
 
 [node name="Knocked" type="Node" parent="StateMachine"]
+script = ExtResource("21_nhcww")
+
+[node name="KnDuration" type="Timer" parent="StateMachine/Knocked"]
+wait_time = 0.4
+one_shot = true
 
 [node name="Stats" type="Node" parent="." node_paths=PackedStringArray("debuglayers")]
 script = ExtResource("10_1l2xe")
@@ -514,7 +553,7 @@ shape = SubResource("CapsuleShape2D_f5mm6")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ygs45")
-animation = &"_a_yu1"
+animation = &"knocked"
 autoplay = "idle"
 offset = Vector2(0, -13)
 
@@ -524,7 +563,18 @@ offset_top = -24.0
 offset_right = -39.0
 offset_bottom = -24.0
 
+[node name="Area2D" type="Area2D" parent="."]
+monitorable = false
+script = ExtResource("27_oek0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(28, -15)
+shape = SubResource("RectangleShape2D_r7r20")
+
 [connection signal="timeout" from="StateMachine/Dash/DashDuration" to="StateMachine/Dash" method="_on_dash_duration_timeout"]
 [connection signal="timeout" from="StateMachine/Attack/AttackWait" to="StateMachine/Attack" method="_on_attack_wait_timeout"]
+[connection signal="timeout" from="StateMachine/Vulnerable/VulDuration" to="StateMachine/Vulnerable" method="_on_vul_duration_timeout"]
+[connection signal="timeout" from="StateMachine/Knocked/KnDuration" to="StateMachine/Knocked" method="_on_kn_duration_timeout"]
 [connection signal="timeout" from="Stats/Stamina/RegenDelay" to="Stats/Stamina" method="_on_regen_delay_timeout"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
