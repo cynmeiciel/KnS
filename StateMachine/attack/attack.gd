@@ -1,8 +1,9 @@
 extends State
 class_name AttackStateP
 
-const ATK_STCOST: Array[int] = [4, 9]
+const ATK_STCOST: Array[int] = [2, 5]
 @export var CharInfo: Resource  # MP costs also stored here
+@onready var Sub: Node = get_node("Sub")
 
 # Attack code format: <key><?key?><sequence>
 # For example: g2 means the action when 'g' is performed twice
@@ -13,6 +14,15 @@ var next_atk: AtkCode = AtkCode.new("", "", 0)
 # Whether the player can interrupt the state with another input
 var can_break: bool = false
 
+var curr_sub: SubAtk = null
+
+
+func _ready() -> void:
+	for sub in Sub.get_children():
+		if sub is SubAtk:
+			sub.p_anim = p_anim
+			sub.p_col = p_col
+			sub.p_ctr = p_ctr
 
 func get_atk_key(atk: AtkCode = curr_atk, full: bool = true) -> String:
 	if full:
@@ -78,16 +88,15 @@ func enter() -> void:
 	%Mana.mp -= get_cost()["mp"]
 	%Stamina.st -= get_cost()["st"]
 	
-	perform(curr_atk)
+	curr_sub = Sub.get_node(curr_atk.key)
+	curr_sub.mod = curr_atk.modifier
+	curr_sub.seq = curr_atk.sequence
+	curr_sub.enter()
 
 
 func exit() -> void:
 	curr_atk.clear()
 	next_atk.clear()
-
-#func update(_delta : float) -> void:
-	#if not $AttackTolerance.is_stopped(): 
-		#print($AttackTolerance.time_left)
 
 
 func handle_input(_ev : InputEvent) -> void:
@@ -97,12 +106,17 @@ func handle_input(_ev : InputEvent) -> void:
 		transits_to.emit("Idle")
 
 
+func update(_delta : float) -> void:
+	curr_sub.update(_delta)
+
+
 func physics_update(_delta : float) -> void:
-	pass
+	curr_sub.physics_update(_delta)
 
 
 func _on_animated_sprite_2d_animation_finished():
 	if _active:
+		curr_sub.exit()
 		$AttackWait.start(0.25)
 
 

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-# This script contains general-use functions that shared with other nodes
+# This script contains general-use functions shared with other nodes
 
 @onready var p_anim := $AnimatedSprite2D
 @export var p_ctr : PlayerControl = null
@@ -44,6 +44,7 @@ func toggle_untargetable(to_untr: bool, absolute: bool = true) -> void:
 		collision_mask = 0b100111
 		p_anim.modulate = Color(modulate, 1)
 
+
 func blink_to_enemy(marginx: float = 40, marginy: float = 0, scalar: int = 1,
 				 max_distance: float = 0, turn_around: bool = true) -> void:
 	var destinationx: float = enemy.position.x + marginx*scalar*get_facing_sign()
@@ -52,8 +53,8 @@ func blink_to_enemy(marginx: float = 40, marginy: float = 0, scalar: int = 1,
 	position = Vector2(destinationx, enemy.position.y+marginy)
 	if turn_around:
 		p_anim.flip_h = not p_anim.flip_h
-		
-		
+
+
 func dash_to_enemy(marginx: float = 30, scalar: int = 1,
 			 max_distance: float = 1000) -> void:
 	if max_distance == 0:

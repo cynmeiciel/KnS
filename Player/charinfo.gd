@@ -31,7 +31,7 @@ const MAX_SEQ: Dictionary = {
 	# Of course we do not have the numbers for ults
 }
 
-
+# Next valid attack
 const SEQ: Dictionary = {
 	"g1": [],
 	"g2": ["h1"],
