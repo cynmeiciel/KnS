@@ -3,13 +3,16 @@ class_name Health
 
 signal hp_changed(num)
 
+var alive: bool = true
+
 const HP_MAX: float = 1000
 var hp: float:
 	set(val):
 		hp_changed.emit(val-hp)
 		hp = clamp(val, 0, 1000)
-		if hp == 0:
+		if hp == 0 and alive:
 			owner.is_dead.emit(owner.p_ctr.player_index)
+			alive = false
 	get:
 		return hp
 

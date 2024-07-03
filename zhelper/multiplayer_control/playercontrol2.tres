@@ -4,14 +4,14 @@
 
 [resource]
 script = ExtResource("1_ibk3a")
-player_index = 1
-w = "w2"
-s = "s2"
-a = "a2"
-d = "d2"
-g = "g2"
-h = "h2"
-j = "j2"
-t = "t2"
-y = "y2"
-u = "u2"
+player_index = 2
+w = &"w2"
+s = &"s2"
+a = &"a2"
+d = &"d2"
+g = &"g2"
+h = &"h2"
+j = &"j2"
+t = &"t2"
+y = &"y2"
+u = &"u2"

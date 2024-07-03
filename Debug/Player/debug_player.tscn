@@ -1,11 +1,11 @@
 [gd_scene load_steps=14 format=3 uid="uid://kjk8ohhfeno"]
 
-[ext_resource type="Script" path="res://Debug/debugatk.gd" id="1_4lcqh"]
-[ext_resource type="Script" path="res://Debug/debugstate.gd" id="1_tgkux"]
-[ext_resource type="Script" path="res://Debug/debugvel.gd" id="2_grj1s"]
-[ext_resource type="Script" path="res://Debug/debughp.gd" id="2_tf61t"]
-[ext_resource type="Script" path="res://Debug/debugmp.gd" id="3_sw2xg"]
-[ext_resource type="Script" path="res://Debug/debugst.gd" id="4_b7tri"]
+[ext_resource type="Script" path="res://Debug/Player/debugatk.gd" id="1_tl25p"]
+[ext_resource type="Script" path="res://Debug/Player/debugstate.gd" id="2_k8t3c"]
+[ext_resource type="Script" path="res://Debug/Player/debugvel.gd" id="3_yodqc"]
+[ext_resource type="Script" path="res://Debug/Player/debughp.gd" id="4_njnxu"]
+[ext_resource type="Script" path="res://Debug/Player/debugmp.gd" id="5_1dt4c"]
+[ext_resource type="Script" path="res://Debug/Player/debugst.gd" id="6_xykxw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6w8v3"]
 font_size = 11
@@ -50,7 +50,7 @@ offset_bottom = -12.0
 text = "attack"
 label_settings = SubResource("LabelSettings_6w8v3")
 horizontal_alignment = 1
-script = ExtResource("1_4lcqh")
+script = ExtResource("1_tl25p")
 
 [node name="State" type="Label" parent="."]
 texture_filter = 1
@@ -62,7 +62,7 @@ offset_bottom = 3.0
 text = "state"
 label_settings = SubResource("LabelSettings_pyb6q")
 horizontal_alignment = 1
-script = ExtResource("1_tgkux")
+script = ExtResource("2_k8t3c")
 
 [node name="Index" type="Label" parent="."]
 modulate = Color(1, 0.482353, 1, 0.427451)
@@ -84,7 +84,7 @@ offset_right = 95.0
 offset_bottom = -3.0
 text = "vel"
 label_settings = SubResource("LabelSettings_vow7w")
-script = ExtResource("2_grj1s")
+script = ExtResource("3_yodqc")
 
 [node name="HP" type="Label" parent="."]
 layout_mode = 0
@@ -94,7 +94,7 @@ offset_right = 43.0
 offset_bottom = -11.0
 text = "hp"
 label_settings = SubResource("LabelSettings_oy4dq")
-script = ExtResource("2_tf61t")
+script = ExtResource("4_njnxu")
 
 [node name="MP" type="Label" parent="."]
 layout_mode = 0
@@ -104,7 +104,7 @@ offset_right = 43.0
 offset_bottom = -3.0
 text = "mp"
 label_settings = SubResource("LabelSettings_7cpxe")
-script = ExtResource("3_sw2xg")
+script = ExtResource("5_1dt4c")
 
 [node name="ST" type="Label" parent="."]
 layout_mode = 0
@@ -114,4 +114,4 @@ offset_right = 43.0
 offset_bottom = 5.0
 text = "st"
 label_settings = SubResource("LabelSettings_kbc5k")
-script = ExtResource("4_b7tri")
+script = ExtResource("6_xykxw")

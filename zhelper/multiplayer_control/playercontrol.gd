@@ -1,15 +1,15 @@
 extends Resource
 class_name PlayerControl
 
-@export var player_index := 0
-@export var w: StringName = &"w"
-@export var s: StringName = &"s"
-@export var a: StringName = &"a"
-@export var d: StringName = &"d"
+@export var player_index: int
+@export var w: StringName
+@export var s: StringName
+@export var a: StringName
+@export var d: StringName
 
-@export var g: StringName = &"g"
-@export var h: StringName = &"h"
-@export var j: StringName = &"j"
-@export var t: StringName = &"t"
-@export var y: StringName = &"y"
-@export var u: StringName = &"u"
+@export var g: StringName
+@export var h: StringName
+@export var j: StringName
+@export var t: StringName
+@export var y: StringName
+@export var u: StringName

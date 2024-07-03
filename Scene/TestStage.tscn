@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cmybiy36c7oa3"]
+[gd_scene load_steps=11 format=3 uid="uid://cmybiy36c7oa3"]
 
 [ext_resource type="Script" path="res://Scene/TestStage.gd" id="1_4mnm0"]
 [ext_resource type="PackedScene" uid="uid://b7u8brji28up2" path="res://Player/Player.tscn" id="1_xuftq"]
 [ext_resource type="PackedScene" uid="uid://b4h30o06kxw8x" path="res://Scene/camera.tscn" id="2_k4l1t"]
 [ext_resource type="PackedScene" uid="uid://hy4ih7o4jum5" path="res://Scene/HUD/hudui.tscn" id="4_gomw0"]
+[ext_resource type="PackedScene" uid="uid://domefs8svxoi" path="res://Scene/hitboxsim.tscn" id="5_kins2"]
 [ext_resource type="Resource" uid="uid://b3sbltx2lno3e" path="res://zhelper/multiplayer_control/playercontrol2.tres" id="5_mscj8"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xyaen"]
@@ -20,6 +21,26 @@ size = Vector2(98, 3)
 
 [node name="TestStage" type="Node2D"]
 script = ExtResource("1_4mnm0")
+
+[node name="Player" type="Node" parent="."]
+
+[node name="Player1" parent="Player" node_paths=PackedStringArray("enemy") instance=ExtResource("1_xuftq")]
+unique_name_in_owner = true
+position = Vector2(-95, 131)
+enemy = NodePath("../Player2")
+
+[node name="DmgSim" parent="Player/Player1" instance=ExtResource("5_kins2")]
+
+[node name="Player2" parent="Player" node_paths=PackedStringArray("enemy") instance=ExtResource("1_xuftq")]
+unique_name_in_owner = true
+position = Vector2(146, 146)
+p_ctr = ExtResource("5_mscj8")
+enemy = NodePath("../Player1")
+
+[node name="Index" parent="Player/Player2/DEBUG_Player" index="2"]
+text = "P2"
+
+[node name="DmgSim" parent="Player/Player2" instance=ExtResource("5_kins2")]
 
 [node name="Camera" parent="." instance=ExtResource("2_k4l1t")]
 unique_name_in_owner = true
@@ -68,22 +89,6 @@ shape = SubResource("RectangleShape2D_dxj47")
 one_way_collision = true
 
 [node name="HUDUI" parent="." instance=ExtResource("4_gomw0")]
-
-[node name="Player" type="Node" parent="."]
-
-[node name="Player1" parent="Player" node_paths=PackedStringArray("enemy") instance=ExtResource("1_xuftq")]
-unique_name_in_owner = true
-position = Vector2(-95, 131)
-enemy = NodePath("../Player2")
-
-[node name="Player2" parent="Player" node_paths=PackedStringArray("enemy") instance=ExtResource("1_xuftq")]
-unique_name_in_owner = true
-position = Vector2(146, 146)
-p_ctr = ExtResource("5_mscj8")
-enemy = NodePath("../Player1")
-
-[node name="Index" parent="Player/Player2/DEBUG_Player" index="2"]
-text = "P2"
 
 [editable path="Player/Player2"]
 [editable path="Player/Player2/DEBUG_Player"]

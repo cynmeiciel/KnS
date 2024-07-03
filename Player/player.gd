@@ -7,21 +7,9 @@ class_name Player
 @export var p_ctr : PlayerControl = null
 @export var enemy : Player
 
-
+var invincible: bool = false
 signal take_damage(dmg: Damage)
 signal is_dead(idx: int)
-
-enum {
-	stun,
-	invincible
-}
-
-var curr_status: Dictionary = {
-	stun: 0,
-	invincible: 0
-	#...
-}
-
 
 func get_facing_sign() -> int:
 	return -1 if p_anim.flip_h else 1
@@ -65,7 +53,9 @@ func dash_to_enemy(marginx: float = 30, scalar: int = 1,
 
 
 func _take_damage(dmg: Damage) -> void:
-	if $StateMachine.curr_state is BlockStateP:
+	if invincible:
+		return
+	elif $StateMachine.curr_state is BlockStateP:
 		dmg.damage /= 10
 	take_damage.emit(dmg)
 

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_03ijy")
-player_index = 0
+player_index = 1
 w = &"w"
 s = &"s"
 a = &"a"

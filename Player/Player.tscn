@@ -1,14 +1,14 @@
-[gd_scene load_steps=73 format=3 uid="uid://b7u8brji28up2"]
+[gd_scene load_steps=72 format=3 uid="uid://b7u8brji28up2"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_q5g7w"]
 [ext_resource type="Texture2D" uid="uid://bb8y5tj3npc48" path="res://asset/eiki_stick1.png" id="2_2go1e"]
 [ext_resource type="Resource" uid="uid://bbu6ksrg1pbwi" path="res://zhelper/multiplayer_control/playercontrol1.tres" id="2_f3poj"]
 [ext_resource type="Script" path="res://StateMachine/state_machine_player.gd" id="3_5uvqm"]
+[ext_resource type="Script" path="res://Player/StatusHandler.gd" id="3_ptpqd"]
 [ext_resource type="Script" path="res://StateMachine/idle.gd" id="4_igrf8"]
 [ext_resource type="Script" path="res://StateMachine/move.gd" id="5_3r5yh"]
 [ext_resource type="Script" path="res://StateMachine/block.gd" id="5_6he5r"]
 [ext_resource type="Script" path="res://StateMachine/air.gd" id="6_x3fcm"]
-[ext_resource type="PackedScene" uid="uid://kjk8ohhfeno" path="res://Debug/debug_player.tscn" id="7_m3551"]
 [ext_resource type="Script" path="res://StateMachine/superdash.gd" id="8_0l5cn"]
 [ext_resource type="Script" path="res://StateMachine/dash.gd" id="8_aacly"]
 [ext_resource type="Script" path="res://Player/stats.gd" id="10_1l2xe"]
@@ -28,7 +28,7 @@
 [ext_resource type="Script" path="res://StateMachine/attack/sub_tu.gd" id="19_rs7ec"]
 [ext_resource type="Script" path="res://StateMachine/vulnerable.gd" id="20_b45qy"]
 [ext_resource type="Script" path="res://StateMachine/knocked.gd" id="21_nhcww"]
-[ext_resource type="Script" path="res://Player/Area2D.gd" id="27_oek0b"]
+[ext_resource type="PackedScene" uid="uid://kjk8ohhfeno" path="res://Debug/Player/debug_player.tscn" id="28_ubhjq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f5mm6"]
 height = 52.0
@@ -406,9 +406,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_r7r20"]
-size = Vector2(26, 46)
-
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("enemy")]
 position = Vector2(40, 33)
 collision_mask = 39
@@ -420,6 +417,24 @@ p_ctr = ExtResource("2_f3poj")
 enemy = NodePath(".")
 
 [node name="StatusHandler" type="Node" parent="."]
+script = ExtResource("3_ptpqd")
+
+[node name="Poison" type="Node" parent="StatusHandler"]
+
+[node name="Duration" type="Timer" parent="StatusHandler/Poison"]
+wait_time = 0.275
+one_shot = true
+
+[node name="Timer" type="Timer" parent="StatusHandler/Poison"]
+wait_time = 0.4
+
+[node name="Burn" type="Node" parent="StatusHandler"]
+
+[node name="Duration" type="Timer" parent="StatusHandler/Burn"]
+one_shot = true
+
+[node name="Timer" type="Timer" parent="StatusHandler/Burn"]
+wait_time = 0.4
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_5uvqm")
@@ -557,24 +572,19 @@ animation = &"knocked"
 autoplay = "idle"
 offset = Vector2(0, -13)
 
-[node name="DEBUG_Player" parent="." instance=ExtResource("7_m3551")]
+[node name="DEBUG_Player" parent="." instance=ExtResource("28_ubhjq")]
 offset_left = -39.0
 offset_top = -24.0
 offset_right = -39.0
 offset_bottom = -24.0
 
-[node name="Area2D" type="Area2D" parent="."]
-monitorable = false
-script = ExtResource("27_oek0b")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(28, -15)
-shape = SubResource("RectangleShape2D_r7r20")
-
+[connection signal="timeout" from="StatusHandler/Poison/Duration" to="StatusHandler" method="reset_poison_params"]
+[connection signal="timeout" from="StatusHandler/Poison/Timer" to="StatusHandler" method="_on_poison"]
+[connection signal="timeout" from="StatusHandler/Burn/Duration" to="StatusHandler" method="reset_burn_params"]
+[connection signal="timeout" from="StatusHandler/Burn/Timer" to="StatusHandler" method="_on_burn"]
 [connection signal="timeout" from="StateMachine/Dash/DashDuration" to="StateMachine/Dash" method="_on_dash_duration_timeout"]
 [connection signal="timeout" from="StateMachine/Attack/AttackWait" to="StateMachine/Attack" method="_on_attack_wait_timeout"]
 [connection signal="timeout" from="StateMachine/Vulnerable/VulDuration" to="StateMachine/Vulnerable" method="_on_vul_duration_timeout"]
 [connection signal="timeout" from="StateMachine/Knocked/KnDuration" to="StateMachine/Knocked" method="_on_kn_duration_timeout"]
 [connection signal="timeout" from="Stats/Stamina/RegenDelay" to="Stats/Stamina" method="_on_regen_delay_timeout"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
